@@ -1,5 +1,5 @@
-Gemini ha detto
-This repository, Beyond-the-flag, features a comparative analysis and implementation of Reinforcement Learning (RL) agents trained to play Super Mario Bros. using different algorithmic approaches. The project explores the transition from "mechanical training" based on dense rewards to "curious intelligence" driven by intrinsic motivation.
+
+Beyond-the-flag features a comparative analysis and implementation of Reinforcement Learning (RL) agents trained to play Super Mario Bros. using different algorithmic approaches. The project explores the transition from "mechanical training" based on dense rewards to "curious intelligence" driven by intrinsic motivation.
 +1
 
 🚀 Overview
