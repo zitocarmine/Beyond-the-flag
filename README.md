@@ -1,46 +1,52 @@
 # 🤖 Beyond the Flag: From Mechanical Training to Curious Intelligence
 
-This repository features a comparative analysis and implementation of Reinforcement Learning (RL) agents trained to play **Super Mario Bros.** using different algorithmic approaches. The project explores the transition from "mechanical training" based on dense rewards to "curious intelligence" driven by intrinsic motivation.
+This repository contains a comparative analysis and implementation of Reinforcement Learning (RL) agents trained to play **Super Mario Bros.** using three distinct algorithmic approaches. The project explores the shift from "mechanical training" based on dense, handcrafted rewards to "curious intelligence" driven by intrinsic motivation and stable policy updates.
 
 ---
 
-## 🚀 Overview
-Traditional RL agents often struggle with **sparse rewards**, where feedback from the environment is infrequent. This project implements and compares tre distinct methodologies to address this challenge:
+## 🚀 The Challenge: Sparse vs. Dense Rewards
+[cite_start]In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level[cite: 13].
 
-1.  **A2C (The Robot):** A standard Advantage Actor-Critic agent using aggressive **Reward Shaping** (dense rewards for every step, killing enemies, etc.).
-2.  **A2C + ICM (The Confused):** An A2C agent augmented with an **Intrinsic Curiosity Module (ICM)**, which struggles with long-term stability and catastrophic forgetting.
-3.  **PPO + ICM (The Child):** A Proximal Policy Optimization agent combined with ICM and **Curriculum Learning** for robust, stable, and curious exploration.
-
----
-
-## 🧠 The Architecture: Intrinsic Curiosity Module (ICM)
-The core of the "curious" agents is the **ICM**, which rewards the agent for "surprise"—discovering states it cannot easily predict. The architecture consists of three neural subnets:
-
-* **Feature Extractor ($\phi$):** Compresses raw $84 \times 84$ pixel inputs into latent vectors using a CNN.
-* **Inverse Model:** Learns to predict the action taken between two states, filtering out environmental changes the agent cannot control (the "leaves-moving-in-the-wind" problem).
-* **Forward Model:** Predicts the future state based on the current state and action. The **prediction error** between the estimated and actual future state becomes the **intrinsic reward**.
+To address this, we explored three methodologies:
+1.  [cite_start]**A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level[cite: 99, 100].
+2.  [cite_start]**A2C + ICM (The Confused):** An agent augmented with curiosity but lacking long-term memory stability, leading to "catastrophic forgetting"[cite: 101, 102].
+3.  [cite_start]**PPO + ICM (The Child):** A robust agent using Policy Clipping and **Curriculum Learning** to explore the world through structured discovery[cite: 103, 104].
 
 ---
 
-## 📉 Methodology & Curriculum Learning
-To achieve mastery, the **PPO + ICM** agent follows a **3-phase Curriculum Learning pipeline**, gradually increasing task complexity:
+## 🧠 The Solution: Intrinsic Curiosity Module (ICM)
+[cite_start]To move beyond external prizes, we implemented the **ICM**, which rewards the agent for "surprise"—discovering states it cannot accurately predict[cite: 23, 24]. [cite_start]The architecture consists of three neural subnets[cite: 28]:
 
-* **Phase 1: Survival & Curiosity (0–1M steps):** Mario learns basic interactions, such as jumping and killing enemies, driven primarily by curiosity without external rewards for moving right.
-* **Phase 2: Direction & Expansion (1M–2.8M steps):** Exploration is pushed forward with incentives for progression and horizontal movement.
-* **Phase 3: Mastery & Speed (2.8M–4M steps):** The agent optimizes the path using time penalties and rewards for collecting coins and power-ups.
+* [cite_start]**Feature Extractor ($\phi$):** A CNN that compresses raw $84 \times 84$ pixel inputs into latent vectors to filter out environmental noise[cite: 38, 41].
+* [cite_start]**Inverse Model:** Predicts the action taken between two states, driving curiosity only toward things the agent can actually influence[cite: 44, 48].
+* **Forward Model:** Estimates the next state based on the current state and action. [cite_start]When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**[cite: 51, 57, 60].
+
+[cite_start]The total optimization follows a unified learning objective[cite: 73, 79]:
+$$\mathcal{L}_{total}=\mathcal{L}_{policy}+\mathcal{L}_{value}+\mathcal{L}_{forward}+\mathcal{L}_{inverse}$$
 
 ---
 
 ## 📂 Project Structure
-To keep the repository clean, all core logic and scripts are organized within the `a2c/` directory:
+The repository is organized into three main experimental directories:
 
 ```text
 .
-├── a2c/
-│   ├── main_a2c.py          # Primary training script
-│   ├── model_a2c.py         # Actor-Critic & ICM architectures
-│   ├── env_wrapper.py       # Preprocessing & Frame stacking
-│   ├── play_a2c_pure.py     # Script to test trained agents
-│   ├── plot_a2c_pure.py     # Visualization of training metrics
-│   └── requirements.txt     # Python dependencies
-└── README.md                # Project documentation
+├── A2C/                        # Baseline: Dense Reward Shaping
+│   ├── main_a2c.py             # Training script for standard A2C
+│   ├── model_a2c.py            # Baseline Actor-Critic architecture
+│   ├── graph_a2c_pure.png      # Results showing fast but robotic convergence
+│   └── requirements.txt        # Dependencies
+│
+├── A2C ICM/                    # Experiment: Curiosity without stability
+│   ├── main_a2c.py             # A2C training with ICM integration
+│   ├── model_a2c.py            # ICM + A2C Neural Architectures
+│   ├── graph_a2c_icm.png       # Results showing "comb-like" exploration gaps
+│   └── requirements.txt        # Dependencies
+│
+├── PPO ICM/                    # Advanced: Robust & Intelligent Exploration
+│   ├── main_ppo.py             # PPO training with Curriculum Learning
+│   ├── model.py                # Stable PPO + ICM Architecture
+│   ├── graph_ppo_icm.png       # Results showing stable, consistent mastery
+│   └── requirements.txt        # Dependencies
+│
+└── README.md                   # Project documentation
