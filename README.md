@@ -8,20 +8,20 @@ This repository contains a comparative analysis and implementation of Reinforcem
 [cite_start]In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level[cite: 13].
 
 To address this, we explored three methodologies:
-1.  [cite_start]**A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level[cite: 99, 100].
-2.  [cite_start]**A2C + ICM (The Confused):** An agent augmented with curiosity but lacking long-term memory stability, leading to "catastrophic forgetting"[cite: 101, 102].
-3.  [cite_start]**PPO + ICM (The Child):** A robust agent using Policy Clipping and **Curriculum Learning** to explore the world through structured discovery[cite: 103, 104].
+1.  **A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level[cite: 99, 100].
+2.  **A2C + ICM (The Confused):** An agent augmented with curiosity but lacking long-term memory stability, leading to "catastrophic forgetting"[cite: 101, 102].
+3.  **PPO + ICM (The Child):** A robust agent using Policy Clipping and **Curriculum Learning** to explore the world through structured discovery[cite: 103, 104].
 
 ---
 
 ## 🧠 The Solution: Intrinsic Curiosity Module (ICM)
-[cite_start]To move beyond external prizes, we implemented the **ICM**, which rewards the agent for "surprise"—discovering states it cannot accurately predict[cite: 23, 24]. [cite_start]The architecture consists of three neural subnets[cite: 28]:
+To move beyond external prizes, we implemented the **ICM**, which rewards the agent for "surprise"—discovering states it cannot accurately predict. The architecture consists of three neural subnets[cite: 28]:
 
-* [cite_start]**Feature Extractor ($\phi$):** A CNN that compresses raw $84 \times 84$ pixel inputs into latent vectors to filter out environmental noise[cite: 38, 41].
-* [cite_start]**Inverse Model:** Predicts the action taken between two states, driving curiosity only toward things the agent can actually influence[cite: 44, 48].
-* **Forward Model:** Estimates the next state based on the current state and action. [cite_start]When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**[cite: 51, 57, 60].
+* **Feature Extractor ($\phi$):** A CNN that compresses raw $84 \times 84$ pixel inputs into latent vectors to filter out environmental noise.
+* **Inverse Model:** Predicts the action taken between two states, driving curiosity only toward things the agent can actually influence.
+* **Forward Model:** Estimates the next state based on the current state and action. [cite_start]When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**.
 
-[cite_start]The total optimization follows a unified learning objective[cite: 73, 79]:
+The total optimization follows a unified learning objective:
 $$\mathcal{L}_{total}=\mathcal{L}_{policy}+\mathcal{L}_{value}+\mathcal{L}_{forward}+\mathcal{L}_{inverse}$$
 
 ---
