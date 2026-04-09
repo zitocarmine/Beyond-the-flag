@@ -22,8 +22,6 @@ To move beyond external prizes, we implemented the **ICM**, which rewards the ag
 * **Forward Model:** Estimates the next state based on the current state and action.
 * When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**.
 
-The total optimization follows a unified learning objective:
-$$\mathcal{L}_{total}=\mathcal{L}_{policy}+\mathcal{L}_{value}+\mathcal{L}_{forward}+\mathcal{L}_{inverse}$$
 
 ---
 
