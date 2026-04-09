@@ -19,7 +19,8 @@ To move beyond external prizes, we implemented the **ICM**, which rewards the ag
 
 * **Feature Extractor ($\phi$):** A CNN that compresses raw $84 \times 84$ pixel inputs into latent vectors to filter out environmental noise.
 * **Inverse Model:** Predicts the action taken between two states, driving curiosity only toward things the agent can actually influence.
-* **Forward Model:** Estimates the next state based on the current state and action. [cite_start]When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**.
+* **Forward Model:** Estimates the next state based on the current state and action.
+* When its prediction fails, it triggers an **Intrinsic Reward ($r_i$)**.
 
 The total optimization follows a unified learning objective:
 $$\mathcal{L}_{total}=\mathcal{L}_{policy}+\mathcal{L}_{value}+\mathcal{L}_{forward}+\mathcal{L}_{inverse}$$
