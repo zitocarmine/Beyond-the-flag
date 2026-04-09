@@ -5,7 +5,7 @@ This repository contains a comparative analysis and implementation of Reinforcem
 ---
 
 ## 🚀 The Challenge: Sparse vs. Dense Rewards
-[cite_start]In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level.
+In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level.
 
 To address this, we explored three methodologies:
 1.  **A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level.
