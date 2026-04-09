@@ -5,17 +5,17 @@ This repository contains a comparative analysis and implementation of Reinforcem
 ---
 
 ## 🚀 The Challenge: Sparse vs. Dense Rewards
-[cite_start]In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level[cite: 13].
+[cite_start]In classical Reinforcement Learning (RL), agents often struggle with **sparse rewards**—situations where feedback is provided only after a long sequence of actions, such as reaching the flag at the end of a level.
 
 To address this, we explored three methodologies:
-1.  **A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level[cite: 99, 100].
-2.  **A2C + ICM (The Confused):** An agent augmented with curiosity but lacking long-term memory stability, leading to "catastrophic forgetting"[cite: 101, 102].
-3.  **PPO + ICM (The Child):** A robust agent using Policy Clipping and **Curriculum Learning** to explore the world through structured discovery[cite: 103, 104].
+1.  **A2C (The Robot):** A baseline agent using aggressive **Reward Shaping** (points for every step, killing enemies, etc.) to brute-force the level.
+2.  **A2C + ICM (The Confused):** An agent augmented with curiosity but lacking long-term memory stability, leading to "catastrophic forgetting".
+3.  **PPO + ICM (The Child):** A robust agent using Policy Clipping and **Curriculum Learning** to explore the world through structured discovery.
 
 ---
 
 ## 🧠 The Solution: Intrinsic Curiosity Module (ICM)
-To move beyond external prizes, we implemented the **ICM**, which rewards the agent for "surprise"—discovering states it cannot accurately predict. The architecture consists of three neural subnets[cite: 28]:
+To move beyond external prizes, we implemented the **ICM**, which rewards the agent for "surprise"—discovering states it cannot accurately predict. The architecture consists of three neural subnets:
 
 * **Feature Extractor ($\phi$):** A CNN that compresses raw $84 \times 84$ pixel inputs into latent vectors to filter out environmental noise.
 * **Inverse Model:** Predicts the action taken between two states, driving curiosity only toward things the agent can actually influence.
